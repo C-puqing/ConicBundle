@@ -2,7 +2,7 @@ project(LP_MP-horizon-tracking)
 cmake_minimum_required(VERSION 3.1.2)
 
 # compiler options
-add_definitions(-march=native)
+add_definitions(-march=native -fpermissive)
 
 FUNCTION(PREPEND var prefix)
     SET(listVar "")
