@@ -1,8 +1,9 @@
-project(LP_MP-horizon-tracking)
+project(ConicBundle)
 cmake_minimum_required(VERSION 3.1.2)
 
 # compiler options
-add_definitions(-march=native -fpermissive)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 
 FUNCTION(PREPEND var prefix)
     SET(listVar "")
@@ -71,14 +72,18 @@ SET(MATRIX_FILES
 
 PREPEND(MATRIX_FILES "Matrix" ${MATRIX_FILES})
 
+
 add_library(cb STATIC ${CBSOURCES_FILES} ${MATRIX_FILES})
+target_include_directories(cb PUBLIC CBsources include Matrix Tools)
+target_compile_features(cb PUBLIC cxx_std_98)
+target_compile_options(cb PUBLIC -march=native)
+
 target_include_directories(cb PUBLIC CBsources include Matrix Tools)
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     target_compile_definitions(cb PRIVATE CONICBUNDLE_DEBUG=1)
 else()
     target_compile_definitions(cb PRIVATE CONICBUNDLE_DEBUG=0)
 endif ()
-
 
 enable_testing()
 
